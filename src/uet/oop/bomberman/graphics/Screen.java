@@ -3,9 +3,10 @@ package uet.oop.bomberman.graphics;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.entities.character.Bomber.Bomber;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Xử lý render cho tất cả Entity và một số màn hình phụ ra Game Panel
@@ -26,9 +27,7 @@ public class Screen {
 	}
 	
 	public void clear() {
-		for (int i = 0; i < _pixels.length; i++) {
-			_pixels[i] = 0;
-		}
+		Arrays.fill(_pixels, 0);
 	}
 	
 	public void renderEntity(int xp, int yp, Entity entity) { //save entity pixels
@@ -127,18 +126,18 @@ public class Screen {
 	 }
 	
 	public int getWidth() {
-		return _width;
+		return this._width;
 	}
 	
 	public int getHeight() {
-		return _height;
+		return this._height;
 	}
 	
 	public int getRealWidth() {
-		return _width * Game.SCALE;
+		return this._width * Game.SCALE;
 	}
 	
 	public int getRealHeight() {
-		return _height * Game.SCALE;
+		return this._height * Game.SCALE;
 	}
 }

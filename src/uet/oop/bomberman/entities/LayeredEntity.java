@@ -14,8 +14,8 @@ public class LayeredEntity extends Entity {
 	protected LinkedList<Entity> _entities = new LinkedList<>();
 	
 	public LayeredEntity(int x, int y, Entity ... entities) {
-		_x = x;
-		_y = y;
+		this._position.setCoordinateX(x);
+		this._position.setCoordinateY(y);
 		
 		for (int i = 0; i < entities.length; i++) {
 			_entities.add(entities[i]); 

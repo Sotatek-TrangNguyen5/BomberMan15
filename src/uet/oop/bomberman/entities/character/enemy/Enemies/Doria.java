@@ -1,8 +1,9 @@
-package uet.oop.bomberman.entities.character.enemy;
+package uet.oop.bomberman.entities.character.enemy.Enemies;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.entities.character.enemy.ai.AIMedium;
+import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.character.enemy.ai.MediumAI;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Doria extends Enemy {
@@ -10,7 +11,7 @@ public class Doria extends Enemy {
         super(x, y, board,Sprite.kondoria_dead, Game.getBomberSpeed()*1.1, 400);
         _sprite = Sprite.kondoria_left1;
 
-        _ai = new AIMedium(board.getBomber(), this);
+        _ai = new MediumAI(board.getBomber(), this);
         _direction = _ai.calculateDirection();
     }
 

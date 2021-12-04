@@ -18,8 +18,8 @@ public class Brick extends DestroyableTile {
 	
 	@Override
 	public void render(Screen screen) {
-		int x = Coordinates.tileToPixel(_x);
-		int y = Coordinates.tileToPixel(_y);
+		int x = Coordinates.tileToPixel(_position.getCoordinateX());
+		int y = Coordinates.tileToPixel(_position.getCoordinateY());
 		
 		if(_destroyed) {
 			_sprite = movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2);

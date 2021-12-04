@@ -2,24 +2,25 @@ package uet.oop.bomberman.entities.character;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.entities.AnimatedEntitiy;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Screen;
 
 /**
  * Bao gồm Bomber và Enemy
  */
-public abstract class Character extends AnimatedEntitiy {
+public abstract class Character extends AnimatedEntity {
 	
 	protected Board _board;
 	protected int _direction = -1;
 	protected boolean _alive = true;
 	protected boolean _moving = false;
 	public int _timeAfter = 40;
+	private int _speed = 4;
 	
 	public Character(int x, int y, Board board) {
-		_x = x;
-		_y = y;
-		_board = board;
+		this._position.setCoordinateX(x);
+		this._position.setCoordinateY(y);
+		this._board = board;
 	}
 	
 	@Override
@@ -47,18 +48,19 @@ public abstract class Character extends AnimatedEntitiy {
 
 	/**
 	 * Kiểm tra xem đối tượng có di chuyển tới vị trí đã tính toán hay không
-	 * @param x
-	 * @param y
-	 * @return
 	 */
-	protected abstract boolean canMove(double x, double y);
+	protected abstract boolean canMove(double nextX, double nextY);
 
 	protected double getXMessage() {
-		return (_x * Game.SCALE) + (_sprite.SIZE / 2 * Game.SCALE);
+		return (_position.getCoordinateX() * Game.SCALE) + ((double) _sprite.getSize() / 2 * Game.SCALE);
 	}
 	
 	protected double getYMessage() {
-		return (_y* Game.SCALE) - (_sprite.SIZE / 2 * Game.SCALE);
+		return (_position.getCoordinateY() * Game.SCALE) - ((double) _sprite.getSize() / 2 * Game.SCALE);
+	}
+
+	public void setSpeed(int speed) {
+		this._speed = speed;
 	}
 	
 }

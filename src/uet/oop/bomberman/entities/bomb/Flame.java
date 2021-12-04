@@ -2,8 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.character.Bomber;
-import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.Position;
 import uet.oop.bomberman.graphics.Screen;
 
 public class Flame extends Entity {
@@ -11,7 +10,7 @@ public class Flame extends Entity {
     protected Board _board;
     protected int _direction;
     private int _radius;
-    protected int xOrigin, yOrigin;
+    protected Position _positionOrigin = new Position();
     protected FlameSegment[] _flameSegments;
 
     /**
@@ -21,10 +20,10 @@ public class Flame extends Entity {
      * @param radius    độ dài cực đại của Flame
      */
     public Flame(int x, int y, int direction, int radius, Board board) {
-        xOrigin = x;
-        yOrigin = y;
-        _x = x;
-        _y = y;
+        this._positionOrigin.setCoordinateX(x);
+        this._positionOrigin.setCoordinateY(y);
+        this._position.setCoordinateX(x);
+        this._position.setCoordinateY(y);
         _direction = direction;
         _radius = radius;
         _board = board;
@@ -48,8 +47,8 @@ public class Flame extends Entity {
 
         // TODO: tạo các segment dưới đây
 
-        int calculatedX = (int) _x;
-        int calculatedY = (int) _y;
+        int calculatedX = (int) _position.getCoordinateX();
+        int calculatedY = (int) _position.getCoordinateY();
         for (int i = 0; i < flameSegmentsLength; i++) {
             switch (_direction) {
                 case 0: {
@@ -90,8 +89,8 @@ public class Flame extends Entity {
     private int calculatePermitedDistance() {
         // TODO: thực hiện tính toán độ dài của Flame
         int flameLength = 0;
-        int calculatedX = (int) _x;
-        int calculatedY = (int) _y;
+        int calculatedX = (int) _position.getCoordinateX();
+        int calculatedY = (int) _position.getCoordinateY();
         for (; flameLength <= _radius; flameLength++) {
             switch (_direction) {
                 case 0: {
@@ -127,9 +126,9 @@ public class Flame extends Entity {
     }
 
     public FlameSegment flameSegmentAt(int x, int y) {
-        for (int i = 0; i < _flameSegments.length; i++) {
-            if (_flameSegments[i].getX() == x && _flameSegments[i].getY() == y)
-                return _flameSegments[i];
+        for (FlameSegment flameSegment : _flameSegments) {
+            if (flameSegment.getX() == x && flameSegment.getY() == y)
+                return flameSegment;
         }
         return null;
     }
@@ -140,8 +139,8 @@ public class Flame extends Entity {
 
     @Override
     public void render(Screen screen) {
-        for (int i = 0; i < _flameSegments.length; i++) {
-            _flameSegments[i].render(screen);
+        for (FlameSegment flameSegment : _flameSegments) {
+            flameSegment.render(screen);
         }
     }
 

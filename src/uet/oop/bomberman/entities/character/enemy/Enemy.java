@@ -5,7 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.bomb.Flame;
-import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.entities.character.Bomber.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.character.enemy.ai.AI;
 import uet.oop.bomberman.graphics.Screen;
@@ -31,29 +31,28 @@ public abstract class Enemy extends Character {
     public Enemy(int x, int y, Board board, Sprite dead, double speed, int points) {
         super(x, y, board);
 
-        _points = points;
-        _speed = speed;
+        this._points = points;
+        this._speed = speed;
 
-        MAX_STEPS = Game.TILES_SIZE / _speed;
-        rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
-        _steps = MAX_STEPS;
+        this.MAX_STEPS = Game.TILES_SIZE / this._speed;
+        this.rest = (this.MAX_STEPS - (int) this.MAX_STEPS) / this.MAX_STEPS;
+        this._steps = this.MAX_STEPS;
 
         _timeAfter = 20;
-        _deadSprite = dead;
+        this._deadSprite = dead;
         Game.addEnemyCount(1);
     }
 
     @Override
     public void update() {
         animate();
-
         if (!_alive) {
             afterKill();
-            return;
+        }
+        else {
+            calculateMove();
         }
 
-        if (_alive)
-            calculateMove();
     }
 
     @Override
@@ -63,7 +62,7 @@ public abstract class Enemy extends Character {
             chooseSprite();
         else {
             if (_timeAfter > 0) {
-                _sprite = _deadSprite;
+                _sprite = this._deadSprite;
                 _animate = 0;
             } else {
                 _sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 60);
@@ -71,7 +70,7 @@ public abstract class Enemy extends Character {
 
         }
 
-        screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
+        screen.renderEntity((int) _position.getCoordinateX(), (int) _position.getCoordinateY() - _sprite.getSize(), this);
     }
 
     @Override
@@ -81,56 +80,54 @@ public abstract class Enemy extends Character {
         // TODO: sử dụng move() để di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
 
-        double x = this._x;
-        double y = this._y;
-        if (_steps <= 0){
-            _steps= MAX_STEPS;
+        double x = this._position.getCoordinateX();
+        double y = this._position.getCoordinateY();
+        if (this._steps <= 0){
+            this._steps = this.MAX_STEPS;
             this._direction = _ai.calculateDirection();
         }
-        _steps--;
+        this._steps--;
 
         switch (this._direction) {
             case 0: {
-                y -= _speed;
+                y -= this._speed;
                 break;
             }
             case 1: {
-                x += _speed;
+                x += this._speed;
                 break;
             }
             case 2: {
-                y += _speed;
+                y += this._speed;
                 break;
             }
             case 3: {
-                x -=_speed;
+                x -= this._speed;
                 break;
             }
             default: {
                 break;
             }
         }
-
-
         this.move(x, y);
     }
 
     @Override
     public void move(double xa, double ya) {
         if (_alive && this.canMove(xa, ya)) {
-            _y = ya;
-            _x = xa;
+            this._position.setCoordinateY(ya);
+            this._position.setCoordinateX(xa);
         }
     }
 
     @Override
-    public boolean canMove(double x, double y) {
+    public boolean canMove(double nextX, double nextY) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        double dependedDirectionX1 = x;
-        double dependedDirectionY1 = y;
+        double dependedDirectionX1 = nextX;
+        double dependedDirectionY1 = nextY;
 
-        double dependedDirectionX2 = x;
-        double dependedDirectionY2 = y;
+        double dependedDirectionX2 = nextX;
+        double dependedDirectionY2 = nextY;
 
         switch (this._direction) {
 
@@ -191,7 +188,7 @@ public abstract class Enemy extends Character {
             return true;
         }
 
-        return true;
+        return false;
         // Long but easy to understand
     }
 
@@ -200,9 +197,9 @@ public abstract class Enemy extends Character {
         if (!_alive) return;
         _alive = false;
 
-        _board.addPoints(_points);
+        _board.addPoints(this._points);
 
-        Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
+        Message msg = new Message("+" + this._points, getXMessage(), getYMessage(), 2, Color.white, 14);
         _board.addMessage(msg);
         Game.addEnemyCount(-1);
     }
@@ -212,7 +209,7 @@ public abstract class Enemy extends Character {
     protected void afterKill() {
         if (_timeAfter > 0) --_timeAfter;
         else {
-            if (_finalAnimation > 0) --_finalAnimation;
+            if (this._finalAnimation > 0) --this._finalAnimation;
             else
                 remove();
         }

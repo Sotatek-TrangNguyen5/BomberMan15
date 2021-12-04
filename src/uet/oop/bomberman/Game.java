@@ -88,9 +88,7 @@ public class Game extends Canvas {
 
         _board.render(screen);
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = screen._pixels[i];
-        }
+        System.arraycopy(screen._pixels, 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
 

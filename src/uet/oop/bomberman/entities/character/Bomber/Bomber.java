@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.character;
+package uet.oop.bomberman.entities.character.Bomber;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Wall;
@@ -16,6 +17,7 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 import uet.oop.bomberman.sound.effect.SoundEffect;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,9 +34,9 @@ public class Bomber extends Character {
 
     public Bomber(int x, int y, Board board) {
         super(x, y, board);
-        _bombs = _board.getBombs();
-        _input = _board.getInput();
-        _sprite = Sprite.player_right;
+        this._bombs = _board.getBombs();
+        this._input = _board.getInput();
+        this._sprite = Sprite.player_right;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class Bomber extends Character {
         else
             _sprite = Sprite.player_dead1;
 
-        screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
+        screen.renderEntity((int) _position.getCoordinateX(), (int) _position.getCoordinateY() - _sprite.getSize(), this);
     }
 
     public void calculateXOffset() {
@@ -85,7 +87,7 @@ public class Bomber extends Character {
         if (_input.space && bombRate > 0 && this._timeBetweenPutBombs < 0) {
             Game.addBombRate(-1);
             this._timeBetweenPutBombs = Game.TIME_BETWEEN_PLACE_BOMB;
-            this.placeBomb(Coordinates.pixelToTile(this._x + Game.TILES_SIZE / 2), Coordinates.pixelToTile(this._y - Game.TILES_SIZE / 2));
+            this.placeBomb(Coordinates.pixelToTile(this._position.getCoordinateX() + (double) Game.TILES_SIZE / 2), Coordinates.pixelToTile(this._position.getCoordinateY() - (double) Game.TILES_SIZE / 2));
         }
 
     }
@@ -130,8 +132,8 @@ public class Bomber extends Character {
     @Override
     protected void calculateMove() {
 
-        double x = this._x;
-        double y = this._y;
+        double x = this._position.getCoordinateX();
+        double y = this._position.getCoordinateY();
 
         if (_input.up) {
             y -= Game.getBomberSpeed();
@@ -156,11 +158,7 @@ public class Bomber extends Character {
             this._direction = 3;
         }
 
-        if (_input.right || _input.up || _input.down || _input.left) {
-            this._moving = true;
-        } else {
-            this._moving = false;
-        }
+        this._moving = _input.right || _input.up || _input.down || _input.left;
 
 
         this.move(x, y);
@@ -205,7 +203,6 @@ public class Bomber extends Character {
                 dependedDirectionY1 -= 1;
                 dependedDirectionX2 += Game.getCharacterWidth() - 1;
                 dependedDirectionY2 -= 1;
-//                System.out.println(this._x + " " + this._y + " " + dependedDirectionY1 + " " + dependedDirectionY2);
                 break;
             }
 
@@ -223,7 +220,7 @@ public class Bomber extends Character {
 
         Entity entity1 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX1), Coordinates.pixelToTile(dependedDirectionY1), this);
         Entity entity2 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX2), Coordinates.pixelToTile(dependedDirectionY2), this);
-        Entity currentEntity = _board.getBombAt(Coordinates.pixelToTile(_x), Coordinates.pixelToTile(_y - 1));
+        Entity currentEntity = _board.getBombAt(Coordinates.pixelToTile(_position.getCoordinateX()), Coordinates.pixelToTile(_position.getCoordinateY() - 1));
 
         if (currentEntity == null) {
             return !(entity1.collide(this) || entity2.collide(this));
@@ -235,9 +232,10 @@ public class Bomber extends Character {
     public void move(double xa, double ya) {
 
         if (this.canMove(xa, ya) && _alive) {
-            this._x = xa;
-            this._y = ya;
-        } else {
+            this._position.setCoordinateX(xa);
+            this._position.setCoordinateY(ya);
+        }
+        else {
             for (int i = 0; i < Game.getBomberSpeed(); i++) {
                 switch (this._direction) {
                     case 0: {
@@ -258,9 +256,9 @@ public class Bomber extends Character {
                         break;
                     }
                 }
-                if (canMove(xa, ya)) {
-                    this._x = xa;
-                    this._y = ya;
+                if (this.canMove(xa, ya)) {
+                    this._position.setCoordinateX(xa);
+                    this._position.setCoordinateY(ya);
                     break;
                 }
             }
@@ -276,14 +274,13 @@ public class Bomber extends Character {
 
         if (e instanceof Flame) {
             this.kill();
-            return false;
+            return true;
         }
 
         if (e instanceof Enemy) {
             this.kill();
             return true;
         }
-
 
         return false;
     }
@@ -294,12 +291,6 @@ public class Bomber extends Character {
                 _sprite = Sprite.player_up;
                 if (_moving) {
                     _sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, _animate, 20);
-                }
-                break;
-            case 1:
-                _sprite = Sprite.player_right;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
                 }
                 break;
             case 2:

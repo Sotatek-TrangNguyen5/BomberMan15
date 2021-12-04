@@ -1,9 +1,9 @@
-package uet.oop.bomberman.entities.character.enemy;
+package uet.oop.bomberman.entities.character.enemy.Enemies;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.entities.character.enemy.ai.AIMedium;
+import uet.oop.bomberman.entities.character.enemy.ai.MediumAI;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Minvo extends Enemy {
@@ -12,7 +12,7 @@ public class Minvo extends Enemy {
         super(x, y, board, Sprite.minvo_dead, Game.getBomberSpeed(), 300);
         _sprite = Sprite.minvo_left1;
 
-        _ai = new AIMedium(board.getBomber(), this);
+        _ai = new MediumAI(board.getBomber(), this);
         _direction = _ai.calculateDirection();
     }
     @Override

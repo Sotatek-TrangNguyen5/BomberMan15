@@ -11,8 +11,8 @@ import uet.oop.bomberman.level.Coordinates;
 public abstract class Tile extends Entity {
 	
 	public Tile(int x, int y, Sprite sprite) {
-		_x = x;
-		_y = y;
+		this._position.setCoordinateX(x);
+		this._position.setCoordinateY(y);
 		_sprite = sprite;
 	}
 
@@ -28,7 +28,7 @@ public abstract class Tile extends Entity {
 	
 	@Override
 	public void render(Screen screen) {
-		screen.renderEntity( Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y), this);
+		screen.renderEntity( Coordinates.tileToPixel(_position.getCoordinateX()), Coordinates.tileToPixel(_position.getCoordinateY()), this);
 	}
 	
 	@Override

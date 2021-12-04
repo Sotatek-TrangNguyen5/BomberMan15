@@ -10,7 +10,7 @@ import uet.oop.bomberman.level.Coordinates;
  */
 public abstract class Entity implements IRender {
 
-	protected double _x, _y;
+	protected Position _position = new Position();
 	protected boolean _removed = false;
 	protected Sprite _sprite;
 
@@ -42,24 +42,26 @@ public abstract class Entity implements IRender {
 
 	/**
 	 * Phương thức này được gọi để xử lý khi hai entity va chạm vào nhau
-	 * @param e
-	 * @return
 	 */
 	public abstract boolean collide(Entity e);
 	
 	public double getX() {
-		return _x;
+		return _position.getCoordinateX();
 	}
 	
 	public double getY() {
-		return _y;
+		return _position.getCoordinateY();
+	}
+
+	public Position get_position() {
+		return _position;
 	}
 	
 	public int getXTile() {
-		return Coordinates.pixelToTile(_x + _sprite.SIZE / 2);
+		return Coordinates.pixelToTile(_position.getCoordinateX() + (double) _sprite.getSize() / 2);
 	}
 	
 	public int getYTile() {
-		return Coordinates.pixelToTile(_y - _sprite.SIZE / 2);
+		return Coordinates.pixelToTile(_position.getCoordinateY() - (double) _sprite.getSize() / 2);
 	}
 }
