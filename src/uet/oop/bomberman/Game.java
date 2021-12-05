@@ -3,7 +3,6 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
-import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -124,7 +123,7 @@ public class Game extends Canvas {
     public void start() {
         _running = true;
 
-        SoundEffect.init();
+
 
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
@@ -151,7 +150,7 @@ public class Game extends Canvas {
 
                 renderScreen();
             } else {
-                SoundEffect.GHOST.loopInf();
+
                 renderGame();
             }
 

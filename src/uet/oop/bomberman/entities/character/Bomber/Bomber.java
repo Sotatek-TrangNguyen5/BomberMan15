@@ -3,21 +3,16 @@ package uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.entities.tile.Grass;
-import uet.oop.bomberman.entities.tile.Wall;
-import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
-import uet.oop.bomberman.sound.effect.SoundEffect;
 
-import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -117,7 +112,7 @@ public class Bomber extends Character {
     @Override
     public void kill() {
         if (!_alive) return;
-        SoundEffect.GHOST.stop();
+//        SoundEffect.GHOST.stop();
         _alive = false;
     }
 

@@ -1,7 +1,10 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.image.Image;
+
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
+
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 
@@ -13,6 +16,16 @@ public abstract class Entity implements IRender {
 	protected Position _position = new Position();
 	protected boolean _removed = false;
 	protected Sprite _sprite;
+//	protected Image img;
+
+	/**
+	 * Constructor
+	 */
+//	public Entity( int xUnit, int yUnit, Image img) {
+//		this._position.setCoordinateX(xUnit * Sprite.SCALED_SIZE);
+//		this._position.setCoordinateY(yUnit * Sprite.SCALED_SIZE);
+//		this.img = img;
+//	}
 
 	/**
 	 * Phương thức này được gọi liên tục trong vòng lặp game,

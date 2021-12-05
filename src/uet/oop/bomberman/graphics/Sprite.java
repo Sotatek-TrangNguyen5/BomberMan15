@@ -1,7 +1,9 @@
 package uet.oop.bomberman.graphics;
 
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.util.Arrays;
 
 /**

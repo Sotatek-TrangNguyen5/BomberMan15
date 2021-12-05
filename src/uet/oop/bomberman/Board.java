@@ -12,7 +12,6 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
-import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -84,7 +83,7 @@ public class Board implements IRender {
 	}
 	
 	public void nextLevel() {
-		SoundEffect.GHOST.stop();
+
 		loadLevel(_levelLoader.getLevel() + 1);
 	}
 	
@@ -120,8 +119,8 @@ public class Board implements IRender {
 	
 	public boolean detectNoEnemies() {
 		int total = 0;
-		for (int i = 0; i < _characters.size(); i++) {
-			if(!(_characters.get(i) instanceof Bomber))
+		for (Character character : _characters) {
+			if (!(character instanceof Bomber))
 				++total;
 		}
 		
@@ -144,7 +143,7 @@ public class Board implements IRender {
 	
 	public Entity getEntity(double x, double y, Character m) {
 		
-		Entity res = null;
+		Entity res;
 		
 		res = getFlameSegmentAt((int)x, (int)y);
 		if( res != null) return res;
@@ -245,34 +244,30 @@ public class Board implements IRender {
 	}
 
 	protected void renderCharacter(Screen screen) {
-		Iterator<Character> itr = _characters.iterator();
-		
-		while(itr.hasNext())
-			itr.next().render(screen);
+
+		for (Character character : _characters) character.render(screen);
 	}
 	
 	protected void renderBombs(Screen screen) {
-		Iterator<Bomb> itr = _bombs.iterator();
-		
-		while(itr.hasNext())
-			itr.next().render(screen);
+
+		for (Bomb bomb : _bombs) bomb.render(screen);
 	}
 	
 	public void renderMessages(Graphics g) {
 		Message m;
-		for (int i = 0; i < _messages.size(); i++) {
-			m = _messages.get(i);
-			
+		for (Message message : _messages) {
+			m = message;
+
 			g.setFont(new Font("Arial", Font.PLAIN, m.getSize()));
 			g.setColor(m.getColor());
-			g.drawString(m.getMessage(), (int)m.getX() - Screen.xOffset  * Game.SCALE, (int)m.getY());
+			g.drawString(m.getMessage(), (int) m.getX() - Screen.xOffset * Game.SCALE, (int) m.getY());
 		}
 	}
 	
 	protected void updateEntities() {
 		if( _game.isPaused() ) return;
-		for (int i = 0; i < _entities.length; i++) {
-			_entities[i].update();
+		for (Entity entity : _entities) {
+			entity.update();
 		}
 	}
 	
@@ -286,10 +281,8 @@ public class Board implements IRender {
 	
 	protected void updateBombs() {
 		if( _game.isPaused() ) return;
-		Iterator<Bomb> itr = _bombs.iterator();
-		
-		while(itr.hasNext())
-			itr.next().update();
+
+		for (Bomb bomb : _bombs) bomb.update();
 	}
 	
 	protected void updateMessages() {
