@@ -1,14 +1,19 @@
 package uet.oop.bomberman.Renderer.GraphicsRenderer;
 
 
+import javafx.scene.canvas.GraphicsContext;
+
 import java.awt.*;
 
 /**
- * Created by Arnob on 26/09/2014.
- * This interface creates a common environment for different types of graphic objects.
+ * Interface này được dùng để tạo ra một môi trường chung cho tất cả các đối tượng đồ họa
  */
 public interface GraphicsObject {
 
+
+//    RenderingOrder renderingOrder = new RenderingOrder();
+//
+//    GridLocation getGridLocation();
 
     double getImageLocationX();
 
@@ -17,5 +22,7 @@ public interface GraphicsObject {
 
     void update();
 
-    void render(Graphics2D g);
+//    void render(Graphics2D g);
+
+    void render(GraphicsContext g);
 }

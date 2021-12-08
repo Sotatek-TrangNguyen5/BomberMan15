@@ -1,5 +1,8 @@
 package uet.oop.bomberman.Renderer.GraphicsRenderer;
 
+import uet.oop.bomberman.Setup.FilePath;
+import uet.oop.bomberman.Setup.ResourceLoader;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,24 +15,25 @@ import java.net.URL;
 public class SpriteSheet {
 
 	private final String _path;
-	private final int SIZE;
-	private int[] _pixels;
+	public final int SIZE_WIDTH;
+	public final int SIZE_HEIGHT;
+	public final int[] _pixels;
 	private BufferedImage image;
 
-	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+	public static SpriteSheet first_tiles = new SpriteSheet(FilePath.GraphicsFilePath.SpriteSheet2, 256, 256);
+	public static SpriteSheet second_tiles = new SpriteSheet(FilePath.GraphicsFilePath.SpriteSheet2, 1394, 128);
 	
-	public SpriteSheet(String path, int size) {
+	public SpriteSheet(String path, int width, int height) {
 		this._path = path;
-		this.SIZE = size;
-		_pixels = new int[SIZE * SIZE];
+		this.SIZE_WIDTH = width;
+		this.SIZE_HEIGHT = height;
+		_pixels = new int[SIZE_WIDTH * SIZE_HEIGHT];
 		load();
 	}
 	
 	private void load() {
 		try {
-			URL a = SpriteSheet.class.getResource(_path);
-			assert a != null;
-			image = ImageIO.read(a);
+			image = ResourceLoader.loadImage(_path);
 			int w = image.getWidth();
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, _pixels, 0, w);
@@ -39,12 +43,12 @@ public class SpriteSheet {
 		}
 	}
 
-	public int getSIZE() {
-		return SIZE;
+	public int getSIZE_HEIGHT() {
+		return SIZE_HEIGHT;
 	}
 
-	public int[] get_pixels() {
-		return _pixels;
+	public int getSIZE_WIDTH() {
+		return SIZE_WIDTH;
 	}
 
 	public BufferedImage getImage() {
