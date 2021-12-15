@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
@@ -19,9 +20,8 @@ public class Game extends Canvas {
     public static final int TILES_SIZE = 16,
             WIDTH = TILES_SIZE * (31 / 2),
             HEIGHT = 13 * TILES_SIZE,
-            MAXIMUM_JUMP_DISTANCE = 4,
             CHARACTER_WIDTH = 11,
-            CHARACTER_HEIGHT = TILES_SIZE;
+            CHARACTER_HEIGHT = TILES_SIZE - 1;
 
 
     public static int SCALE = 3;
@@ -31,7 +31,7 @@ public class Game extends Canvas {
 
     public static final int TIME_BETWEEN_PLACE_BOMB = 10;
 
-    private static final int BOMBRATE = 10;
+    private static final int BOMBRATE = 1;
     private static final int BOMBRADIUS = 1;
     private static final double BOMBERSPEED = 1.0;
     private static final double ENEMY_SPEED = 0.5;
@@ -161,6 +161,7 @@ public class Game extends Canvas {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 _frame.setTime(_board.subtractTime());
+                _frame.setLife(Bomber.get_life());
                 _frame.setPoints(_board.getPoints());
                 timer += 1000;
                 _frame.setTitle(TITLE + " | " + updates + " rate, " + frames + " fps");
@@ -212,7 +213,19 @@ public class Game extends Canvas {
     }
 
     public static void addBombRate(int i) {
-        bombRate += i;
+        bombRate +=  i;
+    }
+
+    public static void setBomberSpeed(double bomberSpeed) {
+        Game.bomberSpeed = bomberSpeed;
+    }
+
+    public static void setBombRadius(int bombRadius) {
+        Game.bombRadius = bombRadius;
+    }
+
+    public static void setBombRate(int bombRate) {
+        Game.bombRate = bombRate;
     }
 
     public void resetScreenDelay() {

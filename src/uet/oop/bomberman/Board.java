@@ -36,8 +36,10 @@ public class Board implements IRender {
 	private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
 	
 	private int _time = Game.TIME;
+	private int _time1 = Game.TIME;
 	private int _points = Game.POINTS;
-	
+	private int life = Bomber._life;
+
 	public Board(Game game, Keyboard input, Screen screen) {
 		_game = game;
 		_input = input;
@@ -313,6 +315,12 @@ public class Board implements IRender {
 		else
 			return this._time--;
 	}
+	public int subtractTime1() {
+		if(_game.isPaused())
+			return this._time1;
+		else
+			return this._time1--;
+	}
 
 	public Keyboard getInput() {
 		return _input;
@@ -336,6 +344,14 @@ public class Board implements IRender {
 
 	public int getTime() {
 		return _time;
+	}
+
+	public int getTime1() {
+		return _time1;
+	}
+
+	public int getLife() {
+		return life;
 	}
 
 	public int getPoints() {

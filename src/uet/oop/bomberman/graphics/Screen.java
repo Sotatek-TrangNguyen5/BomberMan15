@@ -18,9 +18,8 @@ public class Screen {
 	public static int xOffset = 0, yOffset = 0;
 	
 	public Screen(int width, int height) {
-		_width = width;
+		_width  = width;
 		_height = height;
-		
 		_pixels = new int[width * height];
 		
 	}

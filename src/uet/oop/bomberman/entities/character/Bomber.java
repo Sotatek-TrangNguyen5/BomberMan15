@@ -3,15 +3,16 @@ package uet.oop.bomberman.entities.character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.Dahl;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
-import uet.oop.bomberman.entities.tile.Grass;
-import uet.oop.bomberman.entities.tile.Wall;
-import uet.oop.bomberman.entities.tile.destroyable.Brick;
+import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.gui.Frame;
+import uet.oop.bomberman.gui.InfoPanel;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 import uet.oop.bomberman.sound.effect.SoundEffect;
@@ -23,6 +24,7 @@ public class Bomber extends Character {
 
     private List<Bomb> _bombs;
     protected Keyboard _input;
+    public static int _life = 3;
 
     /**
      * nếu giá trị này < 0 thì cho phép đặt đối tượng Bomb tiếp theo,
@@ -40,7 +42,7 @@ public class Bomber extends Character {
     @Override
     public void update() {
         clearBombs();
-        if (!_alive) {
+        if (!_alive){
             afterKill();
             return;
         }
@@ -118,12 +120,23 @@ public class Bomber extends Character {
         SoundEffect.GHOST.stop();
         _alive = false;
     }
-
     @Override
     protected void afterKill() {
-        if (_timeAfter > 0) --_timeAfter;
+        if(_life == 0){
+        if (_timeAfter > 0){
+                --_timeAfter;
+        }
         else {
             _board.endGame();
+            _alive = false;
+        }
+        } else{
+            if (_timeAfter > 0){
+                --_timeAfter;
+            }else{
+                _alive = true;
+                _timeAfter = 60;
+            }
         }
     }
 
@@ -275,17 +288,30 @@ public class Bomber extends Character {
         // TODO: xử lý va chạm với Enemy
 
         if (e instanceof Flame) {
+            _life --;
             this.kill();
             return false;
         }
 
-        if (e instanceof Enemy) {
+        if (e instanceof Balloon) {
+            _life --;
             this.kill();
+            return true;
+        }
+
+        if (e instanceof Oneal) {
+            Game.setBomberSpeed(1.0);
+            Game.setBombRadius(1);
+            Game.setBombRate(1);
             return true;
         }
 
 
         return false;
+    }
+
+    public static int get_life() {
+        return _life;
     }
 
     private void chooseSprite() {

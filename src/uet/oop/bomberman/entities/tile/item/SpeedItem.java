@@ -15,7 +15,7 @@ public class SpeedItem extends Item {
 	public boolean collide(Entity e) {
 		// TODO: xử lý Bomber ăn Item
 		if (e instanceof Bomber){
-			Game.addBomberSpeed(2);
+			Game.addBomberSpeed(1.0);
 			this.remove();
 		}
 		return false;
