@@ -1,19 +1,14 @@
 package uet.oop.bomberman;
 
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.exceptions.LoadLevelException;
-import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
-import uet.oop.bomberman.level.LevelLoader;
-import uet.oop.bomberman.sound.effect.SoundEffect;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
