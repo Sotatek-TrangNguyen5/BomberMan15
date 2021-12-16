@@ -11,10 +11,8 @@ public class AIMedium extends AI {
         _bomber = bomber;
         _e = e;
     }
-
     @Override
     public int calculateDirection() {
-        // TODO: cài đặt thuật toán tìm đường đi
         int bomberX = _bomber.getXTile();
         int bomberY = _bomber.getYTile();
         int enemyX = _e.getXTile();

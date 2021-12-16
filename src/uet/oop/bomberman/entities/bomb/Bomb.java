@@ -80,9 +80,7 @@ public class Bomb extends AnimatedEntitiy {
      */
     protected void explode() {
         _exploded = true;
-
         SoundEffect.EXPLODE.play();
-        // TODO: xử lý khi Character đứng tại vị trí Bomb
 
         List<Character> characterList = _board._characters;
 

@@ -164,7 +164,7 @@ public class Game extends Canvas {
                 _frame.setLife(Bomber.get_life());
                 _frame.setPoints(_board.getPoints());
                 timer += 1000;
-                _frame.setTitle(TITLE + " | " + updates + " rate, " + frames + " fps");
+                _frame.setTitle(TITLE);
                 updates = 0;
                 frames = 0;
 

@@ -45,7 +45,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(1); //start in level 1
+		loadLevel(3); //start in level 1
 	}
 	
 	@Override

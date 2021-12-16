@@ -132,18 +132,6 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     }
 
-                    case '4': { // Minvo
-                        _board.addCharacter(new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
-                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
-                        break;
-                    }
-
-                    case '5': { // Doria
-                        _board.addCharacter(new Doria(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
-                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
-                        break;
-                    }
-
                     case 'p': { // Player
                         _board.addCharacter(new Bomber(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
                         Screen.setOffset(0, 0);
@@ -151,7 +139,7 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     }
 
-                    case 'b': { // More boom, more fun
+                    case 'b': {
                         _board.addEntity(position,
                                 new LayeredEntity(
                                         x, y,

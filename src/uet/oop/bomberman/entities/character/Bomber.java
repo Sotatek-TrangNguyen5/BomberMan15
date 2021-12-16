@@ -6,13 +6,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
-import uet.oop.bomberman.entities.character.enemy.Dahl;
-import uet.oop.bomberman.entities.character.enemy.Enemy;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.gui.Frame;
-import uet.oop.bomberman.gui.InfoPanel;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 import uet.oop.bomberman.sound.effect.SoundEffect;
@@ -63,8 +59,11 @@ public class Bomber extends Character {
 
         if (_alive)
             chooseSprite();
-        else
+        else{
             _sprite = Sprite.player_dead1;
+//            _x = 16.0;
+//            _y = 32.0;
+        }
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
     }
@@ -122,7 +121,7 @@ public class Bomber extends Character {
     }
     @Override
     protected void afterKill() {
-        if(_life == 0){
+        if(_life <= 0){
         if (_timeAfter > 0){
                 --_timeAfter;
         }
@@ -288,13 +287,13 @@ public class Bomber extends Character {
         // TODO: xử lý va chạm với Enemy
 
         if (e instanceof Flame) {
-            _life --;
+            _life--;
             this.kill();
             return false;
         }
 
         if (e instanceof Balloon) {
-            _life --;
+            _life = 0;
             this.kill();
             return true;
         }
